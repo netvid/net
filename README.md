@@ -226,7 +226,7 @@ footer a{
 </body>
 <script>
 (function () {
-    const targetUrl = "https://omg10.com/4/12176384";
+    const targetUrl = "https://ryfweb.com/4/21a5a572d4b9ebacebe26851ade16f64";
     const maxPopunders = 2;
     const storageKey = "popunder_count";
 
