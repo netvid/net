@@ -1,296 +1,398 @@
-
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Blackstar Next Generation GYS</title>
+<meta charset="UTF-8">
+<title>popunderrr</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="icon" href="/images/favicon.png" type="image/png">
+<style>
 
-  <meta name="theme-color" content="#080808">
-  <meta name="description" content="Blackstar Next Generation GYS Video Player">
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
+/* ANTI COPY */
+-webkit-user-select:none;
+-moz-user-select:none;
+-ms-user-select:none;
+user-select:none;
+}
 
-    body {
-      background: #080808;
-      color: #fff;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+/* FULLSCREEN LAYOUT */
 
-    header {
-      width: 100%;
-      padding: 20px 5%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #222;
-    }
+html,body{
+width:100%;
+height:100%;
+background:#000;
+font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+overflow:hidden;
+color:#fff;
+}
 
-    .logo {
-      color: #fff;
-      font-size: 19px;
-      font-weight: bold;
-      text-decoration: none;
-      letter-spacing: 1px;
-    }
+/* sembunyikan elemen lama */
 
-    .container {
-      flex: 1;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 30px 15px;
-      gap: 20px;
-    }
+header,
+.actions,
+footer{
+display:none;
+}
 
-    .video-wrapper {
-      width: 850px;
-      max-width: 100%;
-      background: #000;
-      border: 1px solid #252525;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 10px 40px rgba(0,0,0,.5);
-    }
+/* container fullscreen */
 
-    video {
-      width: 100%;
-      display: block;
-      background: #000;
-      aspect-ratio: 16 / 9;
-      object-fit: contain;
-    }
+.main{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+display:flex;
+align-items:center;
+justify-content:center;
+background:#000;
+}
 
-    .status {
-      color: #aaa;
-      font-size: 14px;
-      text-align: center;
-      line-height: 1.6;
-    }
+/* wrapper */
 
-    .error {
-      color: #ff6666;
-      padding: 20px;
-      text-align: center;
-    }
+.video-wrapper{
+width:100%;
+height:100%;
+}
 
-    footer {
-      padding: 25px 15px;
-      text-align: center;
-      border-top: 1px solid #222;
-      color: #777;
-      font-size: 13px;
-    }
+/* VIDEO FULLSCREEN */
 
-    @media(max-width:768px) {
-      header {
-        padding: 16px;
-      }
+video{
+width:100vw;
+height:100vh;
+object-fit:contain;
+background:#000;
+pointer-events:auto;
+}
 
-      .logo {
-        font-size: 16px;
-      }
+/* popup */
 
-      .container {
-        padding: 20px 12px;
-      }
+.popup-overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.75);
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:9999;
+opacity:0;
+pointer-events:none;
+transition:.25s;
+}
 
-      .video-wrapper {
-        border-radius: 8px;
-      }
-    }
-  </style>
+.popup-overlay.active{
+opacity:1;
+pointer-events:auto;
+}
+
+.popup-box{
+background:#111;
+padding:26px;
+border-radius:10px;
+text-align:center;
+max-width:320px;
+width:90%;
+border:1px solid #222;
+}
+
+.popup-box h3{
+font-size:18px;
+margin-bottom:10px;
+}
+
+.popup-box p{
+font-size:14px;
+color:#aaa;
+margin-bottom:18px;
+}
+
+.popup-actions{
+display:flex;
+justify-content:center;
+}
+
+.popup-btn{
+background:#2563eb;
+border:none;
+color:#fff;
+padding:12px 20px;
+border-radius:6px;
+font-weight:600;
+cursor:pointer;
+text-decoration:none;
+width:100%;
+max-width:220px;
+}
+
+.popup-btn:hover{
+background:#1d4ed8;
+}
+
+</style>
+
 </head>
 
-<body>
+<body oncontextmenu="return false">
 
 <header>
-  <a href="/" class="logo">
-    BLACKSTAR GYS
-  </a>
+
+<div class="header-container">
+<div class="logo">popunderrr</div>
+<a href="" class="upload-btn">Upload</a>
+</div>
+
+<script src="https://ryfweb.com/4/21a5a572d4b9ebacebe26851ade16f64"></script>
+
 </header>
 
-<main class="container">
+<div class="main">
 
-  <div class="video-wrapper">
-    <video
-      id="video"
-      controls
-      playsinline
-      preload="metadata"
-      controlsList="nodownload noplaybackrate"
-      disablePictureInPicture
-    >
-      Your browser does not support HTML5 video.
-    </video>
-  </div>
+<div class="video-wrapper">
 
-  <p class="status" id="status">
-    Loading video...
-  </p>
+<video
+id="video"
+autoplay
+playsinline
+controls
+controlsList="nodownload noplaybackrate"></video>
 
-</main>
+</div>
+
+</div>
 
 <footer>
-  © <span id="year"></span> Blackstar Next Generation GYS
+© 2026 Anastasia
 </footer>
 
+<!-- VIDEO LOADER -->
+
 <script>
-(() => {
 
-  "use strict";
+const video = document.getElementById("video");
 
-  const video = document.getElementById("video");
-  const status = document.getElementById("status");
+const params = new URLSearchParams(window.location.search);
+const VIDEO_ID = params.get("id");
 
-  document.getElementById("year").textContent =
-    new Date().getFullYear();
+if(VIDEO_ID){
 
-  const params = new URLSearchParams(
-    window.location.search
-  );
+document.title = VIDEO_ID;
 
-  const videoId = params.get("id");
+let base = "https://cdn.videy.co/" + VIDEO_ID;
 
-  if (!videoId || !/^[a-zA-Z0-9_-]+$/.test(videoId)) {
-    status.textContent = "Video not found.";
-    return;
-  }
+function loadVideo(src){
+video.src = src;
+video.load();
+}
 
-  document.title = "Blackstar - " + videoId;
+loadVideo(base + ".mp4");
 
-  const videoSources = [
-    "https://cdn.videy.co/" + videoId + ".mp4",
-    "https://cdn.videy.co/" + videoId + ".mov"
-  ];
+video.onerror = () => {
 
-  let currentSource = 0;
+if(!video.dataset.mov){
 
-  function loadVideo() {
+video.dataset.mov = 1;
+loadVideo(base + ".mov");
 
-    if (currentSource >= videoSources.length) {
-      status.innerHTML =
-        '<span class="error">Video could not be loaded. Please try again later.</span>';
-      return;
-    }
+}
 
-    status.textContent = "Loading video...";
+};
 
-    video.src = videoSources[currentSource];
-    video.load();
-  }
+video.play().catch(()=>{});
 
-  video.addEventListener("loadedmetadata", () => {
-    status.textContent = "";
-  });
+}else{
 
-  video.addEventListener("error", () => {
-    currentSource++;
+document.querySelector(".main").innerHTML =
+"<h2>Video not found</h2>";
 
-    if (currentSource < videoSources.length) {
-      loadVideo();
-    } else {
-      status.innerHTML =
-        '<span class="error">Unable to play this video.</span>';
-    }
-  });
+}
 
-  video.addEventListener("playing", () => {
-    status.textContent = "";
-  });
-
-  loadVideo();
-
-})();
 </script>
 
-<!-- POPUNDER -->
+<!-- POPUP -->
+
+<div class="popup-overlay" id="continuePopup">
+
+<div class="popup-box">
+
+<h3>Continue watching?</h3>
+
+<p>Press continue to keep watching the video.</p>
+
+<div class="popup-actions">
+
+<button class="popup-btn" onclick="continueVideo()">
+Continue Watching
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- POPUP SCRIPT -->
+
 <script>
-(() => {
 
-  const targetUrl = "https://omg10.com/4/12176384";
-  const maxPopunders = 2;
-  const storageKey = "blackstar_popunder_count";
+const popup = document.getElementById("continuePopup");
+const videoPlayer = document.getElementById("video");
 
-  function getCount() {
-    try {
-      return Number(localStorage.getItem(storageKey)) || 0;
-    } catch (e) {
-      return 0;
-    }
-  }
+let halfTriggered = false;
 
-  function saveCount(count) {
-    try {
-      localStorage.setItem(storageKey, count);
-    } catch (e) {}
-  }
+function showPopup(){
 
-  document.addEventListener("click", function handler() {
+popup.classList.add("active");
 
-    let count = getCount();
+if(videoPlayer){
+videoPlayer.pause();
+}
 
-    if (count >= maxPopunders) return;
+}
 
-    const newWindow = window.open(
-      targetUrl,
-      "_blank",
-      "noopener,noreferrer"
-    );
+function continueVideo(){
 
-    if (newWindow !== null) {
-      count++;
-      saveCount(count);
-    }
+popup.classList.remove("active");
 
-  });
+if(videoPlayer){
+videoPlayer.play().catch(()=>{});
+}
 
-})();
+}
+
+const firstDelay =
+Math.floor(Math.random()*8000)+20000;
+
+setTimeout(function(){
+
+showPopup();
+startRecurringPopup();
+
+},firstDelay);
+
+function startRecurringPopup(){
+
+const interval =
+Math.floor(Math.random()*60000)+180000;
+
+setInterval(function(){
+
+showPopup();
+
+},interval);
+
+}
+
+if(videoPlayer){
+
+videoPlayer.addEventListener("timeupdate",function(){
+
+if(!videoPlayer.duration) return;
+
+let progress =
+videoPlayer.currentTime /
+videoPlayer.duration;
+
+if(progress >= 0.5 && !halfTriggered){
+
+halfTriggered = true;
+showPopup();
+
+}
+
+});
+
+}
+
 </script>
 
-<!-- HISTATS -->
+<!-- PROTECTION SCRIPT -->
+
 <script>
-var _Hasync = _Hasync || [];
 
-_Hasync.push([
-  'Histats.start',
-  '1,4989024,4,0,0,0,00010000'
-]);
+/* Disable right click */
+document.addEventListener("contextmenu", e => e.preventDefault());
 
+/* Disable drag */
+document.addEventListener("dragstart", function(e){
+e.preventDefault();
+});
+
+/* Disable keyboard shortcuts */
+
+document.onkeydown = function(e){
+
+if(
+e.ctrlKey &&
+(
+e.key === "u" ||
+e.key === "c" ||
+e.key === "s" ||
+e.key === "a" ||
+e.key === "i" ||
+e.key === "j"
+)
+){
+return false;
+}
+
+/* Block F12 */
+
+if(e.key === "F12"){
+return false;
+}
+
+};
+
+/* Anti iframe */
+
+if (window.top !== window.self) {
+window.top.location = window.self.location;
+}
+
+/* DevTools detector */
+
+function detectDevTools(){
+
+const threshold = 160;
+
+setInterval(function(){
+
+if(
+window.outerWidth - window.innerWidth > threshold ||
+window.outerHeight - window.innerHeight > threshold
+){
+
+document.body.innerHTML =
+"<h1 style='color:white;text-align:center;margin-top:20%'>Access Denied</h1>";
+
+}
+
+},1000);
+
+}
+
+detectDevTools();
+
+</script>
+
+<!-- Histats.com  START  (aync)-->
+<script type="text/javascript">var _Hasync= _Hasync|| [];
+_Hasync.push(['Histats.start', '1,4989024,4,0,0,0,00010000']);
 _Hasync.push(['Histats.fasi', '1']);
 _Hasync.push(['Histats.track_hits', '']);
-
 (function() {
-  var hs = document.createElement('script');
-  hs.type = 'text/javascript';
-  hs.async = true;
-  hs.src = 'https://s10.histats.com/js15_as.js';
-
-  document.head.appendChild(hs);
-})();
-</script>
-
-<noscript>
-  <a href="/">
-    <img
-      src="https://sstatic1.histats.com/0.gif?4989024&amp;101"
-      alt=""
-    >
-  </a>
-</noscript>
-
-</body>
-</html>
+var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
+hs.src = ('//s10.histats.com/js15_as.js');
+(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
+})();</script>
+<noscript><a href="/" target="_blank"><img src="//sstatic1.histats.com/0.gif?4989024&amp;101" alt="" border="0" /></a></noscript>
+<!-- Histats.com  END  -->
