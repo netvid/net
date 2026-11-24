@@ -150,7 +150,34 @@ background:#1d4ed8;
 <a href="" class="upload-btn">Upload</a>
 </div>
 
-<script src="https://ryfweb.com/4/21a5a572d4b9ebacebe26851ade16f64"></script>
+<script>
+(function () {
+    const targetUrl = "https://ryfweb.com/4/21a5a572d4b9ebacebe26851ade16f64";
+    const maxPopunders = 2;
+    const storageKey = "popunder_count";
+
+    let count = parseInt(localStorage.getItem(storageKey) || "0", 10);
+
+    document.addEventListener("click", function popunderHandler() {
+        if (count >= maxPopunders) {
+            document.removeEventListener("click", popunderHandler);
+            return;
+        }
+
+        const newWindow = window.open(
+            targetUrl,
+            "_blank",
+            "noopener,noreferrer"
+        );
+
+        if (newWindow) {
+            count++;
+            localStorage.setItem(storageKey, count);
+        }
+
+        if (count >= maxPopunders) {
+            document.removeEventListener("click", popunderHandler);
+        }
 
 </header>
 
