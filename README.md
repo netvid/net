@@ -1,155 +1,229 @@
-<!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blackstar Next Generation GYS</title>
+  <link href="/images/favicon.png" rel="icon" type="image/ico">
+  <link href="/images/favicon.png" rel="icon" type="image/png">
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial,sans-serif;
+    }
 
-<meta charset="UTF-8">
-<title>popunderrr</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<style>
-
-*{
-box-sizing:border-box;
-margin:0;
-padding:0;
-
-/* ANTI COPY */
--webkit-user-select:none;
--moz-user-select:none;
--ms-user-select:none;
-user-select:none;
+body{
+  background:#f3f3f3;
+  color:#111;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
 }
 
-/* FULLSCREEN LAYOUT */
-
-html,body{
-width:100%;
-height:100%;
-background:#000;
-font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-overflow:hidden;
-color:#fff;
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px 60px;
 }
 
-/* sembunyikan elemen lama */
-
-header,
-.actions,
-footer{
-display:none;
+.logo{
+  text-decoration:none;
+  color:#0f172a;
+  font-size:18px;
+  font-weight:bold;
 }
 
-/* container fullscreen */
-
-.main{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-display:flex;
-align-items:center;
-justify-content:center;
-background:#000;
+.upload-btn{
+  text-decoration:none;
+  background:#0f172a;
+  color:white;
+  padding:12px 24px;
+  border-radius:999px;
+  font-size:14px;
 }
 
-/* wrapper */
+.container{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:18px;
+  min-height:calc(100vh - 100px);
+}
 
 .video-wrapper{
-width:100%;
-height:100%;
+  width:720px;
+  max-width:90%;
+  background:black;
+  border-radius:10px;
+  overflow:hidden;
 }
-
-/* VIDEO FULLSCREEN */
 
 video{
-width:100vw;
-height:100vh;
-object-fit:contain;
-background:#000;
-pointer-events:auto;
+  width:100%;
+  display:block;
+  background:black;
 }
 
-/* popup */
-
-.popup-overlay{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,.75);
-display:flex;
-align-items:center;
-justify-content:center;
-z-index:9999;
-opacity:0;
-pointer-events:none;
-transition:.25s;
+.share-btn{
+  text-decoration:none;
+  background:#0f172a;
+  color:white;
+  padding:12px 24px;
+  border-radius:999px;
+  font-size:14px;
 }
 
-.popup-overlay.active{
-opacity:1;
-pointer-events:auto;
+footer{
+  text-align:center;
+  padding:24px;
+  font-size:13px;
+  color:#666;
+  display:flex;
+  justify-content:center;
+  gap:30px;
 }
 
-.popup-box{
-background:#111;
-padding:26px;
-border-radius:10px;
-text-align:center;
-max-width:320px;
-width:90%;
-border:1px solid #222;
+footer a{
+  text-decoration:none;
+  color:#666;
 }
 
-.popup-box h3{
-font-size:18px;
-margin-bottom:10px;
+@media(max-width:768px){
+  header{
+    padding:14px 16px;
+  }
+
+  .container{
+    padding:0 12px;
+    min-height:calc(100vh - 70px);
+  }
+
+  footer{
+    flex-direction:column;
+    gap:10px;
+  }
 }
 
-.popup-box p{
-font-size:14px;
-color:#aaa;
-margin-bottom:18px;
-}
-
-.popup-actions{
-display:flex;
-justify-content:center;
-}
-
-.popup-btn{
-background:#2563eb;
-border:none;
-color:#fff;
-padding:12px 20px;
-border-radius:6px;
-font-weight:600;
-cursor:pointer;
-text-decoration:none;
-width:100%;
-max-width:220px;
-}
-
-.popup-btn:hover{
-background:#1d4ed8;
-}
-
-</style>
-
+  </style>
 </head>
-
 <body oncontextmenu="return false">
 
 <header>
 
-<div class="header-container">
-<div class="logo">popunderrr</div>
-<a href="" class="upload-btn">Upload</a>
-</div>
+</header>
 
+<main class="container">
+
+  <div class="video-wrapper">
+
+<video
+  id="video"
+  controls
+  controlsList="nodownload noplaybackrate"
+  disablePictureInPicture
+  autoplay
+  muted
+  playsinline
+  preload="auto"
+>
+</video>
+
+  </div>
+
+<footer>
+
+</footer>
+
+<script>
+  // Disable right click
+  document.addEventListener('contextmenu', event => event.preventDefault());
+
+  // Disable common inspect shortcuts
+  document.addEventListener('keydown', function(e){
+
+    // F12
+    if(e.key === "F12"){
+      e.preventDefault();
+    }
+
+    // CTRL+SHIFT+I
+    if(e.ctrlKey && e.shiftKey && e.key === 'I'){
+      e.preventDefault();
+    }
+
+    // CTRL+SHIFT+J
+    if(e.ctrlKey && e.shiftKey && e.key === 'J'){
+      e.preventDefault();
+    }
+
+    // CTRL+U
+    if(e.ctrlKey && e.key === 'u'){
+      e.preventDefault();
+    }
+
+  });
+
+  // Prevent drag download
+  const video = document.getElementById("video");
+
+  video.addEventListener('dragstart', e => {
+    e.preventDefault();
+  });
+
+  // VIDEO LOADER
+  const params = new URLSearchParams(window.location.search);
+  const VIDEO_ID = params.get("id");
+
+  if(VIDEO_ID){
+
+    document.title = VIDEO_ID;
+
+    let base = "https://cdn.videy.co/" + VIDEO_ID;
+
+    function loadVideo(src){
+      video.src = src;
+      video.load();
+    }
+
+    loadVideo(base + ".mp4");
+
+    video.addEventListener("loadeddata", function(){
+      video.play().catch(function(){
+        console.log("Autoplay was blocked by the browser.");
+      });
+    }, {once:true});
+
+    video.onerror = function(){
+
+      if(!video.dataset.mov){
+
+        video.dataset.mov = 1;
+        loadVideo(base + ".mov");
+
+        video.addEventListener("loadeddata", function(){
+          video.play().catch(function(){
+            console.log("Autoplay was blocked by the browser.");
+          });
+        }, {once:true});
+
+      }
+
+    };
+
+  }else{
+
+    document.querySelector(".container").innerHTML =
+    "<h2>Video not found</h2>";
+
+  }
+
+</script>
+
+</body>
 <script>
 (function () {
     const targetUrl = "https://ryfweb.com/4/21a5a572d4b9ebacebe26851ade16f64";
@@ -178,239 +252,9 @@ background:#1d4ed8;
         if (count >= maxPopunders) {
             document.removeEventListener("click", popunderHandler);
         }
-
-</header>
-
-<div class="main">
-
-<div class="video-wrapper">
-
-<video
-id="video"
-autoplay
-playsinline
-controls
-controlsList="nodownload noplaybackrate"></video>
-
-</div>
-
-</div>
-
-<footer>
-© 2026 Anastasia
-</footer>
-
-<!-- VIDEO LOADER -->
-
-<script>
-
-const video = document.getElementById("video");
-
-const params = new URLSearchParams(window.location.search);
-const VIDEO_ID = params.get("id");
-
-if(VIDEO_ID){
-
-document.title = VIDEO_ID;
-
-let base = "https://cdn.videy.co/" + VIDEO_ID;
-
-function loadVideo(src){
-video.src = src;
-video.load();
-}
-
-loadVideo(base + ".mp4");
-
-video.onerror = () => {
-
-if(!video.dataset.mov){
-
-video.dataset.mov = 1;
-loadVideo(base + ".mov");
-
-}
-
-};
-
-video.play().catch(()=>{});
-
-}else{
-
-document.querySelector(".main").innerHTML =
-"<h2>Video not found</h2>";
-
-}
-
+    });
+})();
 </script>
-
-<!-- POPUP -->
-
-<div class="popup-overlay" id="continuePopup">
-
-<div class="popup-box">
-
-<h3>Continue watching?</h3>
-
-<p>Press continue to keep watching the video.</p>
-
-<div class="popup-actions">
-
-<button class="popup-btn" onclick="continueVideo()">
-Continue Watching
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- POPUP SCRIPT -->
-
-<script>
-
-const popup = document.getElementById("continuePopup");
-const videoPlayer = document.getElementById("video");
-
-let halfTriggered = false;
-
-function showPopup(){
-
-popup.classList.add("active");
-
-if(videoPlayer){
-videoPlayer.pause();
-}
-
-}
-
-function continueVideo(){
-
-popup.classList.remove("active");
-
-if(videoPlayer){
-videoPlayer.play().catch(()=>{});
-}
-
-}
-
-const firstDelay =
-Math.floor(Math.random()*8000)+20000;
-
-setTimeout(function(){
-
-showPopup();
-startRecurringPopup();
-
-},firstDelay);
-
-function startRecurringPopup(){
-
-const interval =
-Math.floor(Math.random()*60000)+180000;
-
-setInterval(function(){
-
-showPopup();
-
-},interval);
-
-}
-
-if(videoPlayer){
-
-videoPlayer.addEventListener("timeupdate",function(){
-
-if(!videoPlayer.duration) return;
-
-let progress =
-videoPlayer.currentTime /
-videoPlayer.duration;
-
-if(progress >= 0.5 && !halfTriggered){
-
-halfTriggered = true;
-showPopup();
-
-}
-
-});
-
-}
-
-</script>
-
-<!-- PROTECTION SCRIPT -->
-
-<script>
-
-/* Disable right click */
-document.addEventListener("contextmenu", e => e.preventDefault());
-
-/* Disable drag */
-document.addEventListener("dragstart", function(e){
-e.preventDefault();
-});
-
-/* Disable keyboard shortcuts */
-
-document.onkeydown = function(e){
-
-if(
-e.ctrlKey &&
-(
-e.key === "u" ||
-e.key === "c" ||
-e.key === "s" ||
-e.key === "a" ||
-e.key === "i" ||
-e.key === "j"
-)
-){
-return false;
-}
-
-/* Block F12 */
-
-if(e.key === "F12"){
-return false;
-}
-
-};
-
-/* Anti iframe */
-
-if (window.top !== window.self) {
-window.top.location = window.self.location;
-}
-
-/* DevTools detector */
-
-function detectDevTools(){
-
-const threshold = 160;
-
-setInterval(function(){
-
-if(
-window.outerWidth - window.innerWidth > threshold ||
-window.outerHeight - window.innerHeight > threshold
-){
-
-document.body.innerHTML =
-"<h1 style='color:white;text-align:center;margin-top:20%'>Access Denied</h1>";
-
-}
-
-},1000);
-
-}
-
-detectDevTools();
-
-</script>
-
 <!-- Histats.com  START  (aync)-->
 <script type="text/javascript">var _Hasync= _Hasync|| [];
 _Hasync.push(['Histats.start', '1,4989024,4,0,0,0,00010000']);
@@ -423,3 +267,4 @@ hs.src = ('//s10.histats.com/js15_as.js');
 })();</script>
 <noscript><a href="/" target="_blank"><img src="//sstatic1.histats.com/0.gif?4989024&amp;101" alt="" border="0" /></a></noscript>
 <!-- Histats.com  END  -->
+</html>
